@@ -222,7 +222,7 @@
 
 <section id="gallery" class="section" style="padding: 40px 0; background-color: #f4f4f4;">
     <div class="container">
-        <h2 style="text-align: center; font-family: sans-serif; margin-bottom: 30px;">பரிசு வழங்கும் விழா (Prize Day)</h2>
+        <h2 style="text-align: center; font-family: sans-serif; margin-bottom: 30px;">பரிசளிப்பு விழா புகைப்படங்கள் 2026 (Prize Day)</h2>
         
         <div id="prize-gallery" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
         </div>
@@ -230,7 +230,6 @@
 </section>
 
 <script>
-    // These are the specific IDs from the links you provided
     const photoIds = [
         '12_-ra9PBtiyfIavm-pKI7b5tQZnpKWtC',
         '1Ingfx0E9jXevB7tv0p7cgR66d8jbuTmx',
@@ -238,20 +237,19 @@
         '1xR8xJw_tKEkIp7sGS78Qz0g2PoAQlZZO',
         '1xIo-yHUAejGsNByaG_xrKlrZBCiHW_NJ',
         '1gCgmaW5GDHkV8z28-RCeEKQWbjMsnXYp',
-        '1D3WIW_ssRmRfUOdbjSTD5lWkdmBzT_5P',
+        '1D3WIW_ssRmRfUOdbjSTD5lWkdmBzT_5P', // Photo 7
         '16KnSrLeGi7X9USBLriOAnFq-XgBiPyFG',
         '1SKe3ZoYzvgJ90C3KACFmeW6LElMKTx8e',
         '1H8-bNgGHu2p_rdtznn21Kz897-7VO9-E',
-        '1DU8EB-b6mjMqP5CUo8LaxpQnM0WWGhOu',
-        '1ZZQDN5vzH7jVsoUjQ5iPl1bjCycREGQL',
+        '1DU8EB-b6mjMqP5CUo8LaxpQnM0WWGhOu', // Photo 11
+        '1ZZQDN5vzH7jVsoUjQ5iPl1bjCycREGQL', // Photo 12
         '1ZsBp99Lgsndd7QXbJdmKTjOKlaOI584-',
         '1bENmcjUy759h68KCUvYw4rIIVb0_rrZ6'
     ];
 
     const container = document.getElementById('prize-gallery');
 
-    photoIds.forEach(id => {
-        // Create a wrapper for better styling
+    photoIds.forEach((id, index) => {
         const wrapper = document.createElement('div');
         wrapper.style.borderRadius = '12px';
         wrapper.style.overflow = 'hidden';
@@ -259,15 +257,20 @@
         wrapper.style.backgroundColor = '#fff';
 
         const img = document.createElement('img');
-        
-        // This URL generates a high-quality web preview from your Drive ID
         img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
-        
         img.style.width = '100%';
         img.style.aspectRatio = '4/3';
-        img.style.objectFit = 'cover';
         img.style.display = 'block';
         img.alt = "Prize Day Photo";
+
+        // FIX FOR CUT OFF TOPS:
+        // We target photo 7 (index 6), 11 (index 10), and 12 (index 11)
+        if (index === 6 || index === 10 || index === 11) {
+            img.style.objectFit = 'contain'; // Shows the full photo without cropping
+            img.style.backgroundColor = '#000'; // Adds a black background if there's a gap
+        } else {
+            img.style.objectFit = 'cover'; // Keeps others looking like a full grid
+        }
 
         wrapper.appendChild(img);
         container.appendChild(wrapper);
@@ -571,6 +574,7 @@
 
 </body>
 </html>
+
 
 
 
