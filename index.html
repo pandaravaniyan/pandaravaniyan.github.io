@@ -160,9 +160,6 @@
             <p>பண்டாரவன்னியன் தமிழ் பள்ளி குழந்தைகளுக்கு தமிழ் மொழி மற்றும் பண்பாட்டை கற்றுத்தரும் சிறந்த கல்வி நிலையமாக செயல்படுகிறது.</p>
             <p>அனுபவம் வாய்ந்த ஆசிரியைகளால் தமிழ் மொழி, இலக்கியம் மற்றும் கலைகள் மிகச் சிறந்த முறையில் கற்பிக்கப்படுகின்றன.</p>
         </div>
-        <div>
-            <img src="images/photo1.jpg" alt="School" style="width: 100%; border-radius: 12px; box-shadow: 6px 6px 0 var(--primary);" onerror="this.src='https://via.placeholder.com/500x350'">
-        </div>
     </div>
   </div>
 </section>
@@ -228,7 +225,6 @@
         </div>
     </div>
 </section>
-
 <script>
     const photoIds = [
         '12_-ra9PBtiyfIavm-pKI7b5tQZnpKWtC',
@@ -254,22 +250,21 @@
         wrapper.style.borderRadius = '12px';
         wrapper.style.overflow = 'hidden';
         wrapper.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
-        wrapper.style.backgroundColor = '#fff';
 
         const img = document.createElement('img');
         img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
         img.style.width = '100%';
         img.style.aspectRatio = '4/3';
         img.style.display = 'block';
+        img.style.objectFit = 'cover'; // All photos now fill the width perfectly
         img.alt = "Prize Day Photo";
 
         // FIX FOR CUT OFF TOPS:
-        // We target photo 7 (index 6), 11 (index 10), and 12 (index 11)
+        // For photos 7, 11, and 12, we force the camera to focus on the TOP
         if (index === 6 || index === 10 || index === 11) {
-            img.style.objectFit = 'contain'; // Shows the full photo without cropping
-            img.style.backgroundColor = '#000'; // Adds a black background if there's a gap
+            img.style.objectPosition = 'top center'; 
         } else {
-            img.style.objectFit = 'cover'; // Keeps others looking like a full grid
+            img.style.objectPosition = 'center'; // Others stay centered
         }
 
         wrapper.appendChild(img);
@@ -574,6 +569,7 @@
 
 </body>
 </html>
+
 
 
 
