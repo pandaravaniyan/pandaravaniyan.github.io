@@ -336,140 +336,137 @@
         </div>
 </section>
 
+<style>
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 50px;
+    }
+    .img-card {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        cursor: pointer;
+        aspect-ratio: 1/1;
+        background-color: #eee;
+    }
+    .img-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    /* Lightbox Overlay */
+    #overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.9);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+    #overlay img {
+        max-width: 90%;
+        max-height: 90%;
+        border: 2px solid white;
+    }
+    #close-btn {
+        position: absolute;
+        top: 20px; right: 30px;
+        color: white; font-size: 50px;
+        cursor: pointer;
+        line-height: 1;
+    }
+    body.stop-scrolling { overflow: hidden; }
+</style>
+
+<section style="padding: 40px 20px; background-color: #f4f4f4;">
+    <div id="gallery-container" style="max-width: 1200px; margin: auto;">
+        </div>
+</section>
+
+<div id="overlay" onclick="closeImage()">
+    <span id="close-btn">&times;</span>
+    <img id="big-img" src="">
+</div>
+
 <script>
-    const galleryData = [
-        {
-            title: "பரிசளிப்பு விழா புகைப்படங்கள் 2026",
-            photos: [
-                '12_-ra9PBtiyfIavm-pKI7b5tQZnpKWtC', '1Ingfx0E9jXevB7tv0p7cgR66d8jbuTmx',
-                '1ATwbJQ2Xq49jsA_h0_jVAdsO5Rke9XBQ', '1xR8xJw_tKEkIp7sGS78Qz0g2PoAQlZZO',
-                '1xIo-yHUAejGsNByaG_xrKlrZBCiHW_NJ', '1gCgmaW5GDHkV8z28-RCeEKQWbjMsnXYp',
-                '16KnSrLeGi7X9USBLriOAnFq-XgBiPyFG', '1SKe3ZoYzvgJ90C3KACFmeW6LElMKTx8e',
-                '1H8-bNgGHu2p_rdtznn21Kz897-7VO9-E', '1DU8EB-b6mjMqP5CUo8LaxpQnM0WWGhOu',
-                '1ZZQDN5vzH7jVsoUjQ5iPl1bjCycREGQL', '1ZsBp99Lgsndd7QXbJdmKTjOKlaOI584-',
-                '1bENmcjUy759h68KCUvYw4rIIVb0_rrZ6', '18JbsXkLhBT33QESkgFBHkiM8mAUedsYK',
-                '1gZ5TMEvL4PJnTaF1SS6lqZWa5y3fyKKe', '1xfx6yDSCzxTQIHZwMUFFFvptc2FtbvTb',
-                '1b4RC-AIgvNt-DtDUn6c6wvcAD_Ej-G3e', '1nc3bReIVzaQpaFj8CUvCrvrx4aIqdGHY',
-                '1_ZoMn3SPSzkuRizggnFEYzjYasj-C_jL', '1mla09lWnkb2ikgcq0x8NGVMj3CEnlkI5',
-                '171-NT2x5-jP7FtFQ1JMLlwbmcy3eXI3W'
-            ],
-            topCropIndices: [6, 10, 11]
-        },
-        {
-            title: "கிறிஸ்துமஸ் கொண்டாட்டம் 2025",
-            photos: [
-                '1ysOKnTlI0rcgB92LRnxlV_j0X9U3zr-5', // Pallarnillai
-                '1OxEFe44M1lO-nS-i0wpgvfOpyZU1q9P-', // Year 1
-                '1CPeClotP7wJDQ8VA3e0TbMzEybrz5gi7', // Year 2
-                '1-dRxB0McCBlbi9bYj0fr-9FdUPT6u1Bi', // Year 3
-                '1Je1cM3fu22ivA3Q-t0US2TaArlPXgAPJ', // Year 4
-                '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', // Year 5
-                '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', // Year 6
-                '1Av6grxhrRaOyn9iigzpNzMlsfj_ByEJ_', // Year 7
-                '1zcvsfSfnNBeatIVgEt8meRAxHLIBif1z', // Year 8
-                '1wn1CYdahcST9d7MkjT8dwth5wLHGPuat', // Year 9
-                '1KJLxuXiyS0sAnWNf3PCyP3r-D_ZuIzNT', // Year 10
-                '1mv4lnPK5dySMmup0VG2c8wwlxPOFhokN', // Year 12
-                '1eMTAHhpEwpXsBI3W8uZoEOemmq6WEnVt', // Teachers
-                '1UVJ0YipTJjK7SvTaYZ1_CRxak8XFOgqz', // Schoolaward
-                '12A7RguUg82GilOB2I-sGZKSYlTiUltOy'  // Award
-            ],
-            topCropIndices: [] 
-        }
+    const prizeDayPhotos = [
+        '12_-ra9PBtiyfIavm-pKI7b5tQZnpKWtC', '1Ingfx0E9jXevB7tv0p7cgR66d8jbuTmx',
+        '1ATwbJQ2Xq49jsA_h0_jVAdsO5Rke9XBQ', '1xR8xJw_tKEkIp7sGS78Qz0g2PoAQlZZO',
+        '1xIo-yHUAejGsNByaG_xrKlrZBCiHW_NJ', '1gCgmaW5GDHkV8z28-RCeEKQWbjMsnXYp',
+        '16KnSrLeGi7X9USBLriOAnFq-XgBiPyFG', '1SKe3ZoYzvgJ90C3KACFmeW6LElMKTx8e',
+        '1H8-bNgGHu2p_rdtznn21Kz897-7VO9-E', '1DU8EB-b6mjMqP5CUo8LaxpQnM0WWGhOu',
+        '1ZZQDN5vzH7jVsoUjQ5iPl1bjCycREGQL', '1ZsBp99Lgsndd7QXbJdmKTjOKlaOI584-',
+        '1bENmcjUy759h68KCUvYw4rIIVb0_rrZ6', '18JbsXkLhBT33QESkgFBHkiM8mAUedsYK',
+        '1gZ5TMEvL4PJnTaF1SS6lqZWa5y3fyKKe', '1xfx6yDSCzxTQIHZwMUFFFvptc2FtbvTb',
+        '1b4RC-AIgvNt-DtDUn6c6wvcAD_Ej-G3e', '1nc3bReIVzaQpaFj8CUvCrvrx4aIqdGHY',
+        '1_ZoMn3SPSzkuRizggnFEYzjYasj-C_jL', '1mla09lWnkb2ikgcq0x8NGVMj3CEnlkI5',
+        '171-NT2x5-jP7FtFQ1JMLlwbmcy3eXI3W'
     ];
 
-    // Global variables for navigation
-    let allPhotos = [];
-    let currentIndex = 0;
+    const christmasPhotos = [
+        '1ysOKnTlI0rcgB92LRnxlV_j0X9U3zr-5', '1OxEFe44M1lO-nS-i0wpgvfOpyZU1q9P-', 
+        '1CPeClotP7wJDQ8VA3e0TbMzEybrz5gi7', '1-dRxB0McCBlbi9bYj0fr-9FdUPT6u1Bi', 
+        '1Je1cM3fu22ivA3Q-t0US2TaArlPXgAPJ', '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', 
+        '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', '1Av6grxhrRaOyn9iigzpNzMlsfj_ByEJ_', 
+        '1zcvsfSfnNBeatIVgEt8meRAxHLIBif1z', '1wn1CYdahcST9d7MkjT8dwth5wLHGPuat', 
+        '1KJLxuXiyS0sAnWNf3PCyP3r-D_ZuIzNT', '1mv4lnPK5dySMmup0VG2c8wwlxPOFhokN', 
+        '1eMTAHhpEwpXsBI3W8uZoEOemmq6WEnVt', '1UVJ0YipTJjK7SvTaYZ1_CRxak8XFOgqz', 
+        '12A7RguUg82GilOB2I-sGZKSYlTiUltOy'
+    ];
 
-    const mainContainer = document.getElementById('main-gallery-container');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
+    const container = document.getElementById('gallery-container');
 
-    // Build the gallery
-    galleryData.forEach(gallery => {
-        // Create Heading
-        const heading = document.createElement('h2');
-        heading.textContent = gallery.title;
-        heading.style.cssText = "text-align: center; font-family: sans-serif; margin: 40px 0 25px; color: #333;";
-        mainContainer.appendChild(heading);
+    function createGallery(title, photoList, isPrizeDay) {
+        const h2 = document.createElement('h2');
+        h2.innerText = title;
+        h2.style.cssText = "text-align: center; font-family: sans-serif; margin-bottom: 25px; margin-top: 40px;";
+        container.appendChild(h2);
 
-        // Create Grid
         const grid = document.createElement('div');
-        grid.style.cssText = "display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-bottom: 60px;";
-        
-        gallery.photos.forEach((id, index) => {
-            // Add to the master list for lightbox navigation
-            allPhotos.push(id);
+        grid.className = 'gallery-grid';
 
-            const wrapper = document.createElement('div');
-            wrapper.className = "photo-wrapper";
+        photoList.forEach((id, index) => {
+            const card = document.createElement('div');
+            card.className = 'img-card';
+            card.onclick = () => openImage(id);
 
             const img = document.createElement('img');
-            img.className = "gallery-img";
             img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
-            img.loading = "lazy";
-
-            // Maintain your top-crop focus
-            if (gallery.topCropIndices.includes(index)) {
+            
+            // Re-applying the Top Focus Fix for specific Prize Day photos
+            if (isPrizeDay && (index === 6 || index === 10 || index === 11)) {
                 img.style.objectPosition = 'top center';
+            } else {
+                img.style.objectPosition = 'center';
             }
-
-            wrapper.onclick = () => openLightbox(id);
-            wrapper.appendChild(img);
-            grid.appendChild(wrapper);
+            
+            card.appendChild(img);
+            grid.appendChild(card);
         });
 
-        mainContainer.appendChild(grid);
-    });
-
-    // Lightbox Functions
-    function openLightbox(id) {
-        currentIndex = allPhotos.indexOf(id);
-        updateLightbox();
-        lightbox.style.display = 'flex';
-        document.body.classList.add('no-scroll');
+        container.appendChild(grid);
     }
 
-    function updateLightbox() {
-        const id = allPhotos[currentIndex];
-        // Loading higher resolution for the big view
-        lightboxImg.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+    // Run sections (True/False tells the function whether to look for crop indices)
+    createGallery("பரிசளிப்பு விழா புகைப்படங்கள் 2026", prizeDayPhotos, true);
+    createGallery("கிறிஸ்துமஸ் கொண்டாட்டம் 2025", christmasPhotos, false);
+
+    function openImage(id) {
+        // We use a high quality size for the lightbox
+        document.getElementById('big-img').src = `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+        document.getElementById('overlay').style.display = 'flex';
+        document.body.classList.add('stop-scrolling');
     }
 
-    function closeLightbox() {
-        lightbox.style.display = 'none';
-        document.body.classList.remove('no-scroll');
+    function closeImage() {
+        document.getElementById('overlay').style.display = 'none';
+        document.body.classList.remove('stop-scrolling');
     }
-
-    // Event Listeners
-    document.getElementById('lb-close').onclick = closeLightbox;
-
-    document.getElementById('lb-next').onclick = (e) => {
-        e.stopPropagation();
-        currentIndex = (currentIndex + 1) % allPhotos.length;
-        updateLightbox();
-    };
-
-    document.getElementById('lb-prev').onclick = (e) => {
-        e.stopPropagation();
-        currentIndex = (currentIndex - 1 + allPhotos.length) % allPhotos.length;
-        updateLightbox();
-    };
-
-    // Close when clicking background
-    lightbox.onclick = (e) => {
-        if (e.target === lightbox) closeLightbox();
-    };
-
-    // Keyboard navigation (Esc, Left, Right)
-    document.addEventListener('keydown', (e) => {
-        if (lightbox.style.display === 'flex') {
-            if (e.key === "Escape") closeLightbox();
-            if (e.key === "ArrowRight") document.getElementById('lb-next').click();
-            if (e.key === "ArrowLeft") document.getElementById('lb-prev').click();
-        }
-    });
 </script>
 <section id="pastpapers" class="section">
   <div class="container">
