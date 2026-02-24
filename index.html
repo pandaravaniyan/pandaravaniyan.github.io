@@ -249,6 +249,92 @@
 <section id="gallery" class="section" style="padding: 60px 0; background-color: #f8f9fa;">
     <div class="container" id="main-gallery-container"></div>
 </section>
+<style>
+    /* Gallery Grid Styling */
+    .photo-wrapper { 
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        cursor: pointer; 
+        background: #e0e0e0; 
+        border-radius: 12px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        aspect-ratio: 1/1; 
+    }
+    .photo-wrapper:hover { 
+        transform: translateY(-5px); 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important; 
+    }
+    .gallery-img { 
+        width: 100%; 
+        height: 100%; 
+        display: block; 
+        object-fit: cover; 
+    }
+
+    /* Lightbox (Big View) Styling */
+    #lightbox {
+        display: none; 
+        position: fixed; 
+        z-index: 9999; 
+        top: 0; left: 0; 
+        width: 100%; height: 100%; 
+        background: rgba(0,0,0,0.95); 
+        align-items: center; 
+        justify-content: center; 
+        user-select: none;
+    }
+    #lightbox img { 
+        max-width: 90%; 
+        max-height: 85%; 
+        border-radius: 4px; 
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Navigation Buttons */
+    .lb-btn { 
+        position: absolute; 
+        color: white; 
+        font-size: 35px; 
+        font-weight: bold; 
+        cursor: pointer; 
+        z-index: 10001; 
+        background: rgba(255,255,255,0.1); 
+        border-radius: 50%;
+        width: 60px; height: 60px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        transition: background 0.2s;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,0.3); }
+    
+    #lb-close { top: 20px; right: 20px; font-size: 40px; }
+    #lb-prev { left: 20px; }
+    #lb-next { right: 20px; }
+    
+    /* Lock scroll when lightbox is open */
+    body.no-scroll { overflow: hidden; }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .lb-btn { width: 45px; height: 45px; font-size: 25px; }
+        #lb-prev { left: 10px; }
+        #lb-next { right: 10px; }
+    }
+</style>
+
+<div id="lightbox">
+    <span id="lb-close" class="lb-btn">&times;</span>
+    <span id="lb-prev" class="lb-btn">&#10094;</span>
+    <span id="lb-next" class="lb-btn">&#10095;</span>
+    <img id="lightbox-img" src="" alt="Gallery Preview">
+</div>
+
+<section id="gallery-section" style="padding: 60px 0; background-color: #f4f4f4; min-height: 100vh;">
+    <div class="container" id="main-gallery-container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        </div>
+</section>
 
 <script>
     const galleryData = [
@@ -272,58 +358,117 @@
         {
             title: "கிறிஸ்துமஸ் கொண்டாட்டம் 2025",
             photos: [
-                '1ysOKnTlI0rcgB92LRnxlV_j0X9U3zr-5', '1OxEFe44M1lO-nS-i0wpgvfOpyZU1q9P-', 
-                '1CPeClotP7wJDQ8VA3e0TbMzEybrz5gi7', '1-dRxB0McCBlbi9bYj0fr-9FdUPT6u1Bi', 
-                '1Je1cM3fu22ivA3Q-t0US2TaArlPXgAPJ', '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', 
-                '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', '1Av6grxhrRaOyn9iigzpNzMlsfj_ByEJ_', 
-                '1zcvsfSfnNBeatIVgEt8meRAxHLIBif1z', '1wn1CYdahcST9d7MkjT8dwth5wLHGPuat', 
-                '1KJLxuXiyS0sAnWNf3PCyP3r-D_ZuIzNT', '1mv4lnPK5dySMmup0VG2c8wwlxPOFhokN', 
-                '1eMTAHhpEwpXsBI3W8uZoEOemmq6WEnVt', '1UVJ0YipTJjK7SvTaYZ1_CRxak8XFOgqz', 
-                '12A7RguUg82GilOB2I-sGZKSYlTiUltOy'
+                '1ysOKnTlI0rcgB92LRnxlV_j0X9U3zr-5', // Pallarnillai
+                '1OxEFe44M1lO-nS-i0wpgvfOpyZU1q9P-', // Year 1
+                '1CPeClotP7wJDQ8VA3e0TbMzEybrz5gi7', // Year 2
+                '1-dRxB0McCBlbi9bYj0fr-9FdUPT6u1Bi', // Year 3
+                '1Je1cM3fu22ivA3Q-t0US2TaArlPXgAPJ', // Year 4
+                '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', // Year 5
+                '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', // Year 6
+                '1Av6grxhrRaOyn9iigzpNzMlsfj_ByEJ_', // Year 7
+                '1zcvsfSfnNBeatIVgEt8meRAxHLIBif1z', // Year 8
+                '1wn1CYdahcST9d7MkjT8dwth5wLHGPuat', // Year 9
+                '1KJLxuXiyS0sAnWNf3PCyP3r-D_ZuIzNT', // Year 10
+                '1mv4lnPK5dySMmup0VG2c8wwlxPOFhokN', // Year 12
+                '1eMTAHhpEwpXsBI3W8uZoEOemmq6WEnVt', // Teachers
+                '1UVJ0YipTJjK7SvTaYZ1_CRxak8XFOgqz', // Schoolaward
+                '12A7RguUg82GilOB2I-sGZKSYlTiUltOy'  // Award
             ],
             topCropIndices: [] 
         }
     ];
 
+    // Global variables for navigation
+    let allPhotos = [];
+    let currentIndex = 0;
+
     const mainContainer = document.getElementById('main-gallery-container');
     const lightbox = document.getElementById('lightbox');
-    const lightboxImg = lightbox.querySelector('img');
+    const lightboxImg = document.getElementById('lightbox-img');
 
+    // Build the gallery
     galleryData.forEach(gallery => {
+        // Create Heading
         const heading = document.createElement('h2');
         heading.textContent = gallery.title;
-        heading.style.cssText = "text-align: center; font-family: 'Segoe UI', sans-serif; margin: 50px 0 30px; color: #333; font-weight: 600;";
+        heading.style.cssText = "text-align: center; font-family: sans-serif; margin: 40px 0 25px; color: #333;";
         mainContainer.appendChild(heading);
 
+        // Create Grid
         const grid = document.createElement('div');
-        grid.style.cssText = "display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px; padding: 0 20px;";
+        grid.style.cssText = "display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-bottom: 60px;";
         
         gallery.photos.forEach((id, index) => {
+            // Add to the master list for lightbox navigation
+            allPhotos.push(id);
+
             const wrapper = document.createElement('div');
             wrapper.className = "photo-wrapper";
-            wrapper.style.cssText = "border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); aspect-ratio: 1/1;";
 
             const img = document.createElement('img');
-            // Using a slightly higher quality thumbnail (sz=w1200)
-            img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;
-            img.style.cssText = "width: 100%; height: 100%; display: block; object-fit: cover;";
+            img.className = "gallery-img";
+            img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
             img.loading = "lazy";
-            
-            // Click to enlarge logic
-            wrapper.onclick = () => {
-                lightboxImg.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
-                lightbox.style.display = 'flex';
-            };
 
+            // Maintain your top-crop focus
             if (gallery.topCropIndices.includes(index)) {
                 img.style.objectPosition = 'top center';
             }
 
+            wrapper.onclick = () => openLightbox(id);
             wrapper.appendChild(img);
             grid.appendChild(wrapper);
         });
 
         mainContainer.appendChild(grid);
+    });
+
+    // Lightbox Functions
+    function openLightbox(id) {
+        currentIndex = allPhotos.indexOf(id);
+        updateLightbox();
+        lightbox.style.display = 'flex';
+        document.body.classList.add('no-scroll');
+    }
+
+    function updateLightbox() {
+        const id = allPhotos[currentIndex];
+        // Loading higher resolution for the big view
+        lightboxImg.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+        document.body.classList.remove('no-scroll');
+    }
+
+    // Event Listeners
+    document.getElementById('lb-close').onclick = closeLightbox;
+
+    document.getElementById('lb-next').onclick = (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % allPhotos.length;
+        updateLightbox();
+    };
+
+    document.getElementById('lb-prev').onclick = (e) => {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + allPhotos.length) % allPhotos.length;
+        updateLightbox();
+    };
+
+    // Close when clicking background
+    lightbox.onclick = (e) => {
+        if (e.target === lightbox) closeLightbox();
+    };
+
+    // Keyboard navigation (Esc, Left, Right)
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.style.display === 'flex') {
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowRight") document.getElementById('lb-next').click();
+            if (e.key === "ArrowLeft") document.getElementById('lb-prev').click();
+        }
     });
 </script>
 <section id="pastpapers" class="section">
