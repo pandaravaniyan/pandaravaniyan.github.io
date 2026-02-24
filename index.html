@@ -220,44 +220,38 @@
     <div class="container" id="gallery-container" style="max-width: 1200px; margin: auto; padding: 0 20px;">
         </div>
 </section>
+<section id="gallery-section" style="padding: 20px 0; background-color: #f4f4f4;">
+    <div class="container" id="main-gallery-container" style="max-width: 1100px; margin: auto; padding: 0 20px;">
+        </div>
+</section>
 
 <style>
-    /* Cleaned Gallery Grid */
     .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-        margin-bottom: 40px;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
     }
-
     .img-card {
-        border-radius: 12px;
+        border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         cursor: pointer;
         aspect-ratio: 1/1;
-        background-color: #e0e0e0;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: #eee;
+        transition: transform 0.2s;
     }
-
-    .img-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    .img-card:hover { transform: scale(1.03); }
+    .img-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-title { 
+        text-align: center; 
+        color: #800000; 
+        font-family: 'Arima', cursive; 
+        margin: 25px 0 15px; 
+        font-size: 1.6rem;
     }
-
-    .img-card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-
-    h2.gallery-title {
-        text-align: center;
-        font-family: 'Arima', cursive, sans-serif;
-        color: #800000;
-        margin-bottom: 25px;
-        margin-top: 20px;
+    @media (max-width: 600px) {
+        .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
     }
 </style>
 
@@ -287,13 +281,13 @@
         '12A7RguUg82GilOB2I-sGZKSYlTiUltOy'
     ];
 
-    const container = document.getElementById('gallery-container');
+    const galContainer = document.getElementById('main-gallery-container');
 
     function createGallery(title, photoList, isPrizeDay) {
         const h2 = document.createElement('h2');
         h2.innerText = title;
         h2.className = "gallery-title";
-        container.appendChild(h2);
+        galContainer.appendChild(h2);
 
         const grid = document.createElement('div');
         grid.className = 'gallery-grid';
@@ -302,25 +296,22 @@
             const card = document.createElement('div');
             card.className = 'img-card';
             
-            // REDIRECT FIX: Open in new tab
+            // REDIRECT FIX
             card.onclick = () => {
-                window.open(`https://drive.google.com/file/d/${id}/view?usp=sharing`, '_blank');
+                window.open("https://drive.google.com/file/d/" + id + "/view?usp=sharing", "_blank");
             };
 
             const img = document.createElement('img');
-            img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+            img.src = "https://drive.google.com/thumbnail?id=" + id + "&sz=w800";
             
             if (isPrizeDay && (index === 6 || index === 10 || index === 11)) {
                 img.style.objectPosition = 'top center';
-            } else {
-                img.style.objectPosition = 'center';
             }
             
             card.appendChild(img);
             grid.appendChild(card);
         });
-
-        container.appendChild(grid);
+        galContainer.appendChild(grid);
     }
 
     createGallery("பரிசளிப்பு விழா புகைப்படங்கள் 2026", prizeDayPhotos, true);
