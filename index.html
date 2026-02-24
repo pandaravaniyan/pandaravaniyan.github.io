@@ -224,98 +224,114 @@
     <div class="container" id="main-gallery-container" style="max-width: 1100px; margin: auto; padding: 0 20px;">
         </div>
 </section>
+<section id="gallery-section" style="padding: 40px 0; background-color: #f9f9f9;">
+    <div class="container" id="gallery-base" style="max-width: 1100px; margin: auto; padding: 0 20px;">
+        </div>
+</section>
+
+<div id="photo-lightbox" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; user-select: none;">
+    <span onclick="closeLightbox()" style="position: absolute; top: 20px; right: 30px; color: white; font-size: 50px; cursor: pointer; z-index: 10001;">&times;</span>
+    
+    <span onclick="changeImage(-1)" style="position: absolute; left: 20px; color: white; font-size: 60px; cursor: pointer; padding: 20px;">&#10094;</span>
+    <span onclick="changeImage(1)" style="position: absolute; right: 20px; color: white; font-size: 60px; cursor: pointer; padding: 20px;">&#10095;</span>
+    
+    <img id="lightbox-img" src="" style="max-width: 85%; max-height: 80%; border: 3px solid white; border-radius: 5px; transition: 0.3s;">
+</div>
 
 <style>
-    .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 15px;
-        margin-bottom: 30px;
-    }
+    .gallery-title { text-align: center; color: #800000; margin: 40px 0 20px; font-size: 1.8rem; font-family: sans-serif; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+    
     .img-card {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        cursor: pointer;
-        aspect-ratio: 1/1;
-        background-color: #eee;
-        transition: transform 0.2s;
+        border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        cursor: pointer; aspect-ratio: 1 / 1; background-color: #eee;
+        transition: transform 0.2s ease;
     }
-    .img-card:hover { transform: scale(1.03); }
+    .img-card:hover { transform: translateY(-5px); }
     .img-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .gallery-title { 
-        text-align: center; 
-        color: #800000; 
-        font-family: 'Arima', cursive; 
-        margin: 25px 0 15px; 
-        font-size: 1.6rem;
-    }
-    @media (max-width: 600px) {
+
+    body.no-scroll { overflow: hidden; }
+
+    /* Hide arrows on very small screens to avoid clutter */
+    @media (max-width: 500px) {
+        #photo-lightbox span { font-size: 40px; padding: 10px; }
         .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
     }
 </style>
 
 <script>
-    const prizeDayPhotos = [
+    const allPhotos = [
         '12_-ra9PBtiyfIavm-pKI7b5tQZnpKWtC', '1Ingfx0E9jXevB7tv0p7cgR66d8jbuTmx',
         '1ATwbJQ2Xq49jsA_h0_jVAdsO5Rke9XBQ', '1xR8xJw_tKEkIp7sGS78Qz0g2PoAQlZZO',
         '1xIo-yHUAejGsNByaG_xrKlrZBCiHW_NJ', '1gCgmaW5GDHkV8z28-RCeEKQWbjMsnXYp',
         '16KnSrLeGi7X9USBLriOAnFq-XgBiPyFG', '1SKe3ZoYzvgJ90C3KACFmeW6LElMKTx8e',
         '1H8-bNgGHu2p_rdtznn21Kz897-7VO9-E', '1DU8EB-b6mjMqP5CUo8LaxpQnM0WWGhOu',
-        '1ZZQDN5vzH7jVsoUjQ5iPl1bjCycREGQL', '1ZsBp99Lgsndd7QXbJdmKTjOKlaOI584-',
-        '1bENmcjUy759h68KCUvYw4rIIVb0_rrZ6', '18JbsXkLhBT33QESkgFBHkiM8mAUedsYK',
-        '1gZ5TMEvL4PJnTaF1SS6lqZWa5y3fyKKe', '1xfx6yDSCzxTQIHZwMUFFFvptc2FtbvTb',
-        '1b4RC-AIgvNt-DtDUn6c6wvcAD_Ej-G3e', '1nc3bReIVzaQpaFj8CUvCrvrx4aIqdGHY',
-        '1_ZoMn3SPSzkuRizggnFEYzjYasj-C_jL', '1mla09lWnkb2ikgcq0x8NGVMj3CEnlkI5',
-        '171-NT2x5-jP7FtFQ1JMLlwbmcy3eXI3W'
-    ];
-
-    const christmasPhotos = [
         '1ysOKnTlI0rcgB92LRnxlV_j0X9U3zr-5', '1OxEFe44M1lO-nS-i0wpgvfOpyZU1q9P-', 
-        '1CPeClotP7wJDQ8VA3e0TbMzEybrz5gi7', '1-dRxB0McCBlbi9bYj0fr-9FdUPT6u1Bi', 
-        '1Je1cM3fu22ivA3Q-t0US2TaArlPXgAPJ', '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', 
-        '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', '1Av6grxhrRaOyn9iigzpNzMlsfj_ByEJ_', 
-        '1zcvsfSfnNBeatIVgEt8meRAxHLIBif1z', '1wn1CYdahcST9d7MkjT8dwth5wLHGPuat', 
-        '1KJLxuXiyS0sAnWNf3PCyP3r-D_ZuIzNT', '1mv4lnPK5dySMmup0VG2c8wwlxPOFhokN', 
-        '1eMTAHhpEwpXsBI3W8uZoEOemmq6WEnVt', '1UVJ0YipTJjK7SvTaYZ1_CRxak8XFOgqz', 
-        '12A7RguUg82GilOB2I-sGZKSYlTiUltOy'
+        '1CPeClotP7wJDQ8VA3e0TbMzEybrz5gi7', '1-dRxB0McCBlbi9bYj0fr-9FdUPT6u1Bi'
     ];
 
-    const galContainer = document.getElementById('main-gallery-container');
+    let currentIndex = 0;
+    const mainElement = document.getElementById('gallery-base');
 
-    function createGallery(title, photoList, isPrizeDay) {
-        const h2 = document.createElement('h2');
-        h2.innerText = title;
-        h2.className = "gallery-title";
-        galContainer.appendChild(h2);
+    function renderGallery(title, list, isPrizeDay) {
+        const header = document.createElement('h2');
+        header.innerText = title;
+        header.className = 'gallery-title';
+        mainElement.appendChild(header);
 
         const grid = document.createElement('div');
         grid.className = 'gallery-grid';
 
-        photoList.forEach((id, index) => {
+        list.forEach((id) => {
             const card = document.createElement('div');
             card.className = 'img-card';
-            
-            // REDIRECT FIX
-            card.onclick = () => {
-                window.open("https://drive.google.com/file/d/" + id + "/view?usp=sharing", "_blank");
-            };
+            card.onclick = () => openLightbox(id);
 
             const img = document.createElement('img');
-            img.src = "https://drive.google.com/thumbnail?id=" + id + "&sz=w800";
-            
-            if (isPrizeDay && (index === 6 || index === 10 || index === 11)) {
-                img.style.objectPosition = 'top center';
-            }
+            img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
             
             card.appendChild(img);
             grid.appendChild(card);
         });
-        galContainer.appendChild(grid);
+        mainElement.appendChild(grid);
     }
 
-    createGallery("பரிசளிப்பு விழா புகைப்படங்கள் 2026", prizeDayPhotos, true);
-    createGallery("கிறிஸ்துமஸ் கொண்டாட்டம் 2025", christmasPhotos, false);
+    function openLightbox(id) {
+        currentIndex = allPhotos.indexOf(id);
+        updateLightboxImage();
+        document.getElementById('photo-lightbox').style.display = 'flex';
+        document.body.classList.add('no-scroll');
+    }
+
+    function closeLightbox() {
+        document.getElementById('photo-lightbox').style.display = 'none';
+        document.body.classList.remove('no-scroll');
+    }
+
+    function changeImage(step) {
+        currentIndex += step;
+        if (currentIndex >= allPhotos.length) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = allPhotos.length - 1;
+        updateLightboxImage();
+    }
+
+    function updateLightboxImage() {
+        const id = allPhotos[currentIndex];
+        document.getElementById('lightbox-img').src = `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+    }
+
+    // Initialize Galleries
+    renderGallery("பரிசளிப்பு விழா புகைப்படங்கள் 2026", allPhotos.slice(0, 10), true);
+    renderGallery("கிறிஸ்துமஸ் கொண்டாட்டம் 2025", allPhotos.slice(10), false);
+
+    // Keyboard support (Escape to close, Arrows to browse)
+    document.addEventListener('keydown', (e) => {
+        if (document.getElementById('photo-lightbox').style.display === 'flex') {
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowRight") changeImage(1);
+            if (e.key === "ArrowLeft") changeImage(-1);
+        }
+    });
 </script>
 <section id="pastpapers" class="section">
   <div class="container">
