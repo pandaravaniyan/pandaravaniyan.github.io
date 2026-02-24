@@ -220,9 +220,12 @@
     <div class="container" id="main-gallery-container">
         </div>
 </section>
+<section id="gallery" class="section" style="padding: 40px 0; background-color: #f4f4f4;">
+    <div class="container" id="main-gallery-container">
+        </div>
+</section>
 
 <script>
-    // Organize your photos into data sets
     const galleryData = [
         {
             title: "பரிசளிப்பு விழா புகைப்படங்கள் 2026",
@@ -239,44 +242,58 @@
                 '1_ZoMn3SPSzkuRizggnFEYzjYasj-C_jL', '1mla09lWnkb2ikgcq0x8NGVMj3CEnlkI5',
                 '171-NT2x5-jP7FtFQ1JMLlwbmcy3eXI3W'
             ],
-            topCropIndices: [6, 10, 11] // Photos that need top-center alignment
+            topCropIndices: [6, 10, 11]
         },
         {
             title: "கிறிஸ்துமஸ் கொண்டாட்டம் 2025",
             photos: [
-                 '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', //year6
-                 '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', //year5
-                
-                // Add more Christmas IDs here
+                '1ysOKnTlI0rcgB92LRnxlV_j0X9U3zr-5', // Pallarnillai
+                '1OxEFe44M1lO-nS-i0wpgvfOpyZU1q9P-', // Year 1
+                '1CPeClotP7wJDQ8VA3e0TbMzEybrz5gi7', // Year 2 
+                '1-dRxB0McCBlbi9bYj0fr-9FdUPT6u1Bi', // Year 3
+                '1Je1cM3fu22ivA3Q-t0US2TaArlPXgAPJ', // Year 4
+                '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', // Year 6
+                '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW',  // Year 5
+                '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', //year6
+                '1Av6grxhrRaOyn9iigzpNzMlsfj_ByEJ_', //year7
+                '1zcvsfSfnNBeatIVgEt8meRAxHLIBif1z', //year8
+                '1wn1CYdahcST9d7MkjT8dwth5wLHGPuat', //year9
+                '1KJLxuXiyS0sAnWNf3PCyP3r-D_ZuIzNT', //year10
+                '1mv4lnPK5dySMmup0VG2c8wwlxPOFhokN', //year12
+                '1eMTAHhpEwpXsBI3W8uZoEOemmq6WEnVt', //teachers
+                '1UVJ0YipTJjK7SvTaYZ1_CRxak8XFOgqz', // Schoolaward
+                '12A7RguUg82GilOB2I-sGZKSYlTiUltOy' //award
             ],
-            topCropIndices: [] // Add indices here if any Christmas photos need top cropping
+            topCropIndices: [] 
         }
     ];
 
     const mainContainer = document.getElementById('main-gallery-container');
 
     galleryData.forEach(gallery => {
-        // 1. Create Title
         const heading = document.createElement('h2');
         heading.textContent = gallery.title;
         heading.style.cssText = "text-align: center; font-family: sans-serif; margin: 40px 0 30px;";
         mainContainer.appendChild(heading);
 
-        // 2. Create Grid Container
         const grid = document.createElement('div');
-        grid.style.cssText = "display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 60px;";
+        grid.style.cssText = "display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 60px; padding: 0 20px;";
         
-        // 3. Loop through photos in this specific gallery
         gallery.photos.forEach((id, index) => {
             const wrapper = document.createElement('div');
-            wrapper.style.cssText = "border-radius: 12px; overflow: hidden; shadow: 0 4px 10px rgba(0,0,0,0.1);";
+            // Fixed the "shadow" property here
+            wrapper.style.cssText = "border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: #ddd;";
 
             const img = document.createElement('img');
             img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
             img.style.cssText = "width: 100%; aspect-ratio: 4/3; display: block; object-fit: cover;";
-            img.alt = gallery.title;
+            
+            // Error handling: if image fails to load, show a placeholder or hide
+            img.onerror = function() {
+                this.parentElement.style.display = 'none';
+                console.log("Failed to load image ID: " + id);
+            };
 
-            // Apply special cropping if index is in the topCropIndices list
             if (gallery.topCropIndices.includes(index)) {
                 img.style.objectPosition = 'top center';
             } else {
