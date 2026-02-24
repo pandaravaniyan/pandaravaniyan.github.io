@@ -216,71 +216,80 @@
     </div>
   </div>
 </section>      
-
 <section id="gallery" class="section" style="padding: 40px 0; background-color: #f4f4f4;">
-    <div class="container">
-        <h2 style="text-align: center; font-family: sans-serif; margin-bottom: 30px;">பரிசளிப்பு விழா புகைப்படங்கள் 2026</h2>
-        
-        <div id="prize-gallery" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+    <div class="container" id="main-gallery-container">
         </div>
-    </div>
 </section>
+
 <script>
-    const photoIds = [
-        '12_-ra9PBtiyfIavm-pKI7b5tQZnpKWtC',
-        '1Ingfx0E9jXevB7tv0p7cgR66d8jbuTmx',
-        '1ATwbJQ2Xq49jsA_h0_jVAdsO5Rke9XBQ',
-        '1xR8xJw_tKEkIp7sGS78Qz0g2PoAQlZZO',
-        '1xIo-yHUAejGsNByaG_xrKlrZBCiHW_NJ',
-        '1gCgmaW5GDHkV8z28-RCeEKQWbjMsnXYp',
-       // '1gZ5TMEvL4PJnTaF1SS6lqZWa5y3fyKKe',
-        '16KnSrLeGi7X9USBLriOAnFq-XgBiPyFG',
-        '1SKe3ZoYzvgJ90C3KACFmeW6LElMKTx8e',
-        '1H8-bNgGHu2p_rdtznn21Kz897-7VO9-E',
-        '1DU8EB-b6mjMqP5CUo8LaxpQnM0WWGhOu', // Photo 11
-        '1ZZQDN5vzH7jVsoUjQ5iPl1bjCycREGQL', // Photo 12
-        '1ZsBp99Lgsndd7QXbJdmKTjOKlaOI584-',
-        '1bENmcjUy759h68KCUvYw4rIIVb0_rrZ6',
-        '18JbsXkLhBT33QESkgFBHkiM8mAUedsYK',
-        '1gZ5TMEvL4PJnTaF1SS6lqZWa5y3fyKKe',
-        '1xfx6yDSCzxTQIHZwMUFFFvptc2FtbvTb',
-        '1b4RC-AIgvNt-DtDUn6c6wvcAD_Ej-G3e',
-        '1nc3bReIVzaQpaFj8CUvCrvrx4aIqdGHY',
-        '1_ZoMn3SPSzkuRizggnFEYzjYasj-C_jL',
-        '1mla09lWnkb2ikgcq0x8NGVMj3CEnlkI5',
-        '171-NT2x5-jP7FtFQ1JMLlwbmcy3eXI3W'
-     
+    // Organize your photos into data sets
+    const galleryData = [
+        {
+            title: "பரிசளிப்பு விழா புகைப்படங்கள் 2026",
+            photos: [
+                '12_-ra9PBtiyfIavm-pKI7b5tQZnpKWtC', '1Ingfx0E9jXevB7tv0p7cgR66d8jbuTmx',
+                '1ATwbJQ2Xq49jsA_h0_jVAdsO5Rke9XBQ', '1xR8xJw_tKEkIp7sGS78Qz0g2PoAQlZZO',
+                '1xIo-yHUAejGsNByaG_xrKlrZBCiHW_NJ', '1gCgmaW5GDHkV8z28-RCeEKQWbjMsnXYp',
+                '16KnSrLeGi7X9USBLriOAnFq-XgBiPyFG', '1SKe3ZoYzvgJ90C3KACFmeW6LElMKTx8e',
+                '1H8-bNgGHu2p_rdtznn21Kz897-7VO9-E', '1DU8EB-b6mjMqP5CUo8LaxpQnM0WWGhOu',
+                '1ZZQDN5vzH7jVsoUjQ5iPl1bjCycREGQL', '1ZsBp99Lgsndd7QXbJdmKTjOKlaOI584-',
+                '1bENmcjUy759h68KCUvYw4rIIVb0_rrZ6', '18JbsXkLhBT33QESkgFBHkiM8mAUedsYK',
+                '1gZ5TMEvL4PJnTaF1SS6lqZWa5y3fyKKe', '1xfx6yDSCzxTQIHZwMUFFFvptc2FtbvTb',
+                '1b4RC-AIgvNt-DtDUn6c6wvcAD_Ej-G3e', '1nc3bReIVzaQpaFj8CUvCrvrx4aIqdGHY',
+                '1_ZoMn3SPSzkuRizggnFEYzjYasj-C_jL', '1mla09lWnkb2ikgcq0x8NGVMj3CEnlkI5',
+                '171-NT2x5-jP7FtFQ1JMLlwbmcy3eXI3W'
+            ],
+            topCropIndices: [6, 10, 11] // Photos that need top-center alignment
+        },
+        {
+            title: "கிறிஸ்துமஸ் கொண்டாட்டம் 2025",
+            photos: [
+                 '1D_ivI2MsZozMTdPq9f13IamiL4ya1dx2', //year6
+                 '1HosE8_9QxM_3V9eJ-_alQ65rid2HmwNW', //year5
+                
+                // Add more Christmas IDs here
+            ],
+            topCropIndices: [] // Add indices here if any Christmas photos need top cropping
+        }
     ];
 
-    const container = document.getElementById('prize-gallery');
+    const mainContainer = document.getElementById('main-gallery-container');
 
-    photoIds.forEach((id, index) => {
-        const wrapper = document.createElement('div');
-        wrapper.style.borderRadius = '12px';
-        wrapper.style.overflow = 'hidden';
-        wrapper.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+    galleryData.forEach(gallery => {
+        // 1. Create Title
+        const heading = document.createElement('h2');
+        heading.textContent = gallery.title;
+        heading.style.cssText = "text-align: center; font-family: sans-serif; margin: 40px 0 30px;";
+        mainContainer.appendChild(heading);
 
-        const img = document.createElement('img');
-        img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
-        img.style.width = '100%';
-        img.style.aspectRatio = '4/3';
-        img.style.display = 'block';
-        img.style.objectFit = 'cover'; // All photos now fill the width perfectly
-        img.alt = "Prize Day Photo";
+        // 2. Create Grid Container
+        const grid = document.createElement('div');
+        grid.style.cssText = "display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 60px;";
+        
+        // 3. Loop through photos in this specific gallery
+        gallery.photos.forEach((id, index) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = "border-radius: 12px; overflow: hidden; shadow: 0 4px 10px rgba(0,0,0,0.1);";
 
-        // FIX FOR CUT OFF TOPS:
-        // For photos 7, 11, and 12, we force the camera to focus on the TOP
-        if (index === 6 || index === 10 || index === 11) {
-            img.style.objectPosition = 'top center'; 
-        } else {
-            img.style.objectPosition = 'center'; // Others stay centered
-        }
+            const img = document.createElement('img');
+            img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
+            img.style.cssText = "width: 100%; aspect-ratio: 4/3; display: block; object-fit: cover;";
+            img.alt = gallery.title;
 
-        wrapper.appendChild(img);
-        container.appendChild(wrapper);
+            // Apply special cropping if index is in the topCropIndices list
+            if (gallery.topCropIndices.includes(index)) {
+                img.style.objectPosition = 'top center';
+            } else {
+                img.style.objectPosition = 'center';
+            }
+
+            wrapper.appendChild(img);
+            grid.appendChild(wrapper);
+        });
+
+        mainContainer.appendChild(grid);
     });
 </script>
-
 <section id="pastpapers" class="section">
   <div class="container">
     <h2>வினாத்தாள்கள்</h2>
