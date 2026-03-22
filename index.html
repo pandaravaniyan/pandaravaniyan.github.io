@@ -896,10 +896,10 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
         <div>
             <!-- <h3 style="color: var(--primary); font-family: 'Arima', cursive; margin-top: 0; font-size: 1.2rem;">தொடர்புக்கு</h3> -->
-            <p style="margin-top: 10px; font-size: 0.95rem;">📧 <strong>மின்னஞ்சல்:</strong> pandaravaniyan.tamil@gmail.com</p>
+            <!-- <p style="margin-top: 10px; font-size: 0.95rem;">📧 <strong>மின்னஞ்சல்:</strong> pandaravaniyan.tamil@gmail.com</p>
             <p style="font-size: 0.95rem;">📍 <strong>முகவரி:</strong> St Andrew's Church Hall, Church Gardens, 956 Harrow Road, Sudbury, Middlesex HA0 2QA</p>
             <p style="font-size: 0.95rem;">📞 <strong>தொலைபேசி:</strong> 07506 254805 /07910 059192</p>
-        </div>
+        </div> -->
         <!-- <form action="https://formspree.io/f/mzdzprll" method="POST">
           <input type="text" name="name" placeholder="உங்கள் பெயர்" required>
           <input type="email" name="email" placeholder="உங்கள் மின்னஞ்சல்" required>
@@ -909,32 +909,61 @@
     <!-- </div>
   </div>
 <!-- </section> --> 
-   <section id="contact" class="section">
-  <div class="container">
-    <h2>தொடர்புக்கு</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+<section id="contact" class="section">
+  <div class="container" style="padding: 20px;">
+    <h2 style="font-size: 2.2rem; margin-bottom: 25px;">தொடர்புக்கு</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
         <div>
-            <p style="margin-top: 10px; font-size: 0.95rem;">
-                📧 <strong>மின்னஞ்சல்:</strong> 
-                <a href="mailto:pandaravaniyan.tamil@gmail.com" style="text-decoration: none; color: inherit;">pandaravaniyan.tamil@gmail.com</a>
+            <p style="font-size: 1.25rem; margin-bottom: 20px; line-height: 1.5;">
+                📧 <strong>மின்னஞ்சல்:</strong><br>
+                <a href="mailto:pandaravaniyan.tamil@gmail.com" class="contact-link" style="display: inline-block; padding: 5px 0;">
+                    pandaravaniyan.tamil@gmail.com
+                </a>
             </p>
             
-            <p style="font-size: 0.95rem;">
-                📍 <strong>முகவரி:</strong> 
-                <a href="https://www.google.com/maps/search/?api=1&query=St+Andrew%27s+Church+Hall+Sudbury+HA0+2QA" target="_blank" style="text-decoration: none; color: inherit;">
+            <p style="font-size: 1.25rem; margin-bottom: 20px; line-height: 1.6;">
+                📍 <strong>முகவரி:</strong><br> 
+                <a href="https://www.google.com/maps/search/?api=1&query=St+Andrews+Church+Hall+956+Harrow+Road+HA0+2QA" 
+                   target="_blank" 
+                   class="contact-link" 
+                   style="display: inline-block; padding: 5px 0;">
                     St Andrew's Church Hall, Church Gardens, 956 Harrow Road, Sudbury, Middlesex HA0 2QA
                 </a>
             </p>
             
-            <p style="font-size: 0.95rem;">
-                📞 <strong>தொலைபேசி (WhatsApp):</strong> 
-                <a href="https://wa.me/447506254805" target="_blank" style="text-decoration: none; color: #25D366; font-weight: bold;">07506 254805</a> / 
-                <a href="https://wa.me/447910059192" target="_blank" style="text-decoration: none; color: #25D366; font-weight: bold;">07910 059192</a>
+            <p style="font-size: 1.25rem; line-height: 1.8;">
+                📞 <strong>தொலைபேசி (WhatsApp):</strong> <br>
+                <a href="https://wa.me/447506254805" target="_blank" style="text-decoration: none; color: #25D366; font-weight: bold; white-space: nowrap;">07506 254805</a> 
+                <span style="color: #ccc;"> | </span>
+                <a href="https://wa.me/447910059192" target="_blank" style="text-decoration: none; color: #25D366; font-weight: bold; white-space: nowrap;">07910 059192</a>
             </p>
         </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* Styling for the links */
+  .contact-link {
+    text-decoration: none;
+    color: #0056b3; /* Professional blue */
+  }
+
+  /* Only apply hover effect on devices that have a mouse */
+  @media (hover: hover) {
+    .contact-link:hover {
+      text-decoration: underline;
+      color: #003d7a;
+    }
+  }
+
+  /* Ensure the Menu Bar is legible on mobile */
+  nav a {
+    font-size: 1.3rem !important;
+    padding: 10px;
+  }
+</style>
 
 <footer>
     <p style="text-align:center; padding: 15px; background: #1a1a1a; color: white; margin: 0; font-size: 0.75rem;">© 2026 பண்டார வன்னியன் தமிழ்க் கல்விக் கலையகம். All Rights Reserved.</p>
