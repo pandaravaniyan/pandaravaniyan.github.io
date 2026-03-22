@@ -1,17 +1,23 @@
-
+<!DOCTYPE html>
 <html lang="ta">
 <head>
    <meta name="google" content="notranslate">
 <html lang="ta" class="notranslate">
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>பண்டார வன்னியன் தமிழ்க் கல்விக் கலையகம்</title> 
     <link href="https://fonts.googleapis.com/css2?family=Arima:wght@400;700&family=Mukta+Malar:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-@@ -21,16 +20,18 @@
+            --primary: #800000; 
+            --secondary: #ffcc00; 
+            --bg-tint: #fdf8f2; 
+            --bg-white: #ffffff;
+            --text-dark: #2d2d2d;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Mukta Malar', sans-serif;
@@ -19,8 +25,6 @@
             color: var(--text-dark);
             background-color: var(--bg-white);
         }
-
-
 
         /* --- HEADER & NAVIGATION --- */
         header {
@@ -30,31 +34,29 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             position: sticky; top: 0; z-index: 1000;
             border-bottom: 3px solid var(--primary);
-@@ -43,13 +44,23 @@
         }
-
+        
+        header .container { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
         .logo-group { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
         .logo { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; }
         header h1 { font-size: 0.85rem; color: var(--primary); font-family: 'Arima', cursive; margin-left: 8px; line-height: 1.2; }
 
-
-
-
-
-
-
-
-
         nav { display: flex; align-items: center; }
-
-
         nav a {
             text-decoration: none; color: var(--primary); font-weight: bold;
             margin-left: 12px; font-size: 0.75rem; transition: 0.3s;
             white-space: nowrap;
         }
         nav a:hover { color: var(--secondary); }
-@@ -60,77 +71,64 @@
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
             cursor: pointer;
             gap: 4px;
             padding: 5px;
@@ -63,18 +65,6 @@
         .menu-toggle span { width: 18px; height: 2px; background: var(--primary); border-radius: 2px; }
 
         .container { max-width: 1100px; margin: auto; padding: 0 20px; }
-
-
-
-
-
-
-
-
-
-
-
-
 
         /* --- SECTIONS --- */
 .hero {
@@ -110,7 +100,6 @@
         details summary {
             padding: 12px 18px; font-weight: bold; color: var(--primary); cursor: pointer;
             list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;
-
         }
         details summary::after { content: "▼"; font-size: 0.6rem; }
         details[open] summary::after { content: "▲"; }
@@ -131,8 +120,6 @@
         input, textarea, button { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #eee; box-sizing: border-box; font-size: 0.8rem; }
         button { background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; }
 
-
-
         @media (max-width: 850px) {
             .menu-toggle { display: flex; }
             nav {
@@ -147,7 +134,8 @@
         }
     </style>
 </head>
-@@ -139,36 +137,34 @@
+<body>
+
 <header>
   <div class="container">
     <a href="#" class="logo-group">
